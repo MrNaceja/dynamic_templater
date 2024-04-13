@@ -1,0 +1,86 @@
+{
+  "name": "templater",
+  "displayName": "templater",
+  "description": "Make your templates",
+  "version": "0.0.1",
+  "author": {
+    "name": "Eduardo Toriani (Naceja)",
+    "email": "edutoriani13@gmail.com",
+    "url": "https://github.com/MrNaceja"
+  },
+  "engines": {
+    "vscode": "^1.88.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "templater.newTemplate",
+        "title": "Create new Template",
+        "category": "Templater"
+      },
+      {
+        "command": "templater.newFile",
+        "title": "Create new File based on Template",
+        "category": "Templater"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "templater.newTemplate",
+          "group": "Templater"
+        },
+        {
+          "command": "templater.newFile",
+          "group": "Templater"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "templater.newFile",
+          "group": "Templater"
+        }
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "Templater Configuration",
+      "properties": {
+        "templater.author": {
+          "type": "string",
+          "default": "Author",
+          "description": "Author of the file"
+        },
+        "templater.templatesDir": {
+          "type": "string",
+          "default": "",
+          "description": "A templates custom directory"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.88.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
+    "eslint": "^8.57.0",
+    "typescript": "^5.3.3",
+    "@vscode/test-cli": "^0.0.8",
+    "@vscode/test-electron": "^2.3.9"
+  }
+}
