@@ -7,6 +7,9 @@ import Configuration from "./Configuration";
 const TEMPLATE_EXTENSION = ".mjs";
 
 export default class TemplatesManager {
+  /**
+   * Manage a creation of new template file.
+   */
   createFileTemplate(templateName: string) {
     if (this.existsTemplate(templateName)) {
       throw new Error(
@@ -16,11 +19,14 @@ export default class TemplatesManager {
 
     fs.writeFileSync(
       this.templatePath(templateName),
-      this.getTemplateEstructure()
+      this.getTemplateRenderEstructure()
     );
     return this.templatePath(templateName);
   }
 
+  /**
+   * Manage a creation of new file based on template.
+   */
   async createNewFileBasedOnTemplate(
     template: TTemplate,
     newFileName: string,
@@ -53,6 +59,9 @@ export default class TemplatesManager {
     throw new Error("Inexistent template!");
   }
 
+  /**
+   * Read a module template file rendering internal content.
+   */
   private async renderTemplateContent(
     template: TTemplate,
     options: TTemplateOptions
@@ -81,35 +90,38 @@ export default class TemplatesManager {
   }
 
   /**
-   * Returns the template estructure default as module exports.
+   * Returns the template render estructure default as module exports.
    */
-  private getTemplateEstructure() {
+  private getTemplateRenderEstructure(): string {
     if (this.existsTemplate("default")) {
       return fs.readFileSync(this.templatePath("default"), "utf8");
     }
-    return `/**
- * @typedef  {Object       } TTemplateOptions
- * @property {Date         } currentDate
- * @property {string       } filenameWithExtension
- * @property {string       } filePath
- * @property {TOptionAuthor} author
- *
- * @typedef  {Object } TOptionAuthor
- * @property {string?} name
- * @property {string?} email
- *
- * @typedef {(TTemplateOptions) => string} TTemplateRender
- * @type {TTemplateRender} TTemplateRender
- */
-export default (options) => \`
-/**
- * This is a \${options.filenameWithExtension\} file created with template! :)
- * 
- * @author \${\`\${options.author.name\} - \${options.author.email\}\`\} 
- * @since \${options.currentDate.toLocaleDateString()}
- */
-\`;
-`;
+    return (
+      "/**\n" +
+      " * @typedef  {Object       } TTemplateOptions\n" +
+      " * @property {Date         } currentDate\n" +
+      " * @property {string       } filenameWithExtension\n" +
+      " * @property {string       } filePath\n" +
+      " * @property {TOptionAuthor} author\n" +
+      " * @property {Object       } customOptions\n" +
+      " *\n" +
+      " * @typedef  {Object } TOptionAuthor\n" +
+      " * @property {string?} name\n" +
+      " * @property {string?} email\n" +
+      " *\n" +
+      " * @typedef {(options: TTemplateOptions) => string} TTemplateRender\n" +
+      " * @type {TTemplateRender} TTemplateRender\n" +
+      " */\n" +
+      "export default (options) =>\n" +
+      "  `\n" +
+      "/**\n" +
+      "* This is a ${options.filenameWithExtension} file created with template! :)\n" +
+      "* @internal ${options.customOptions.customValue}\n" +
+      "* @author ${`${options.author.name} - ${options.author.email}`} \n" +
+      "* @since ${options.currentDate.toLocaleDateString()}\n" +
+      "*/\n" +
+      "  `.trim();"
+    );
   }
 
   /**

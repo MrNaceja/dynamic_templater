@@ -143,15 +143,11 @@ export default class Templater {
     const templateOptions = Array.from(templates.values());
     return await vscode.window
       .showQuickPick(
-        templateOptions.map(
-          (
-            template // Formatando a primeira letra para caixa alta...
-          ) => ({
-            label:
-              template.name.at(0)?.toUpperCase() + template.name.substring(1),
-            template,
-          })
-        ),
+        templateOptions.map((template) => ({
+          label:
+            template.name.at(0)?.toUpperCase() + template.name.substring(1),
+          template,
+        })),
         {
           placeHolder: "Select a template to create based on",
         }

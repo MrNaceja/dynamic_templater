@@ -19,11 +19,13 @@ export function activate(context: vscode.ExtensionContext) {
    * - Request to DEV a file name (with extension)
    * - Request to DEV a file template to base
    * - Create a new file with content rendered by template
+   *
+   * This command is visible only on context menu explorer...
    */
-  const newFileTemplateCommand = vscode.commands.registerCommand(
+  const newFileBasedOnTemplateCommand = vscode.commands.registerCommand(
     "templater.newFile",
     templater.newFileBasedOnTemplate.bind(templater)
   );
 
-  context.subscriptions.push(newTemplateCommand, newFileTemplateCommand);
+  context.subscriptions.push(newTemplateCommand, newFileBasedOnTemplateCommand);
 }
