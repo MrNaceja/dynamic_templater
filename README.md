@@ -1,71 +1,23 @@
-# templater README
+# Templater
 
-This is the README for your extension "templater". After writing up a brief description, we recommend including the following sections.
+## Descrição
 
-## Features
+A extensão Templater para o Visual Studio Code oferece uma maneira simples e eficaz de criar e utilizar templates dinâmicos para agilizar o processo de criação de arquivos pré-fabricados. Com Templater, você pode criar e usar modelos personalizados para gerar rapidamente novos arquivos com conteúdo dinâmico.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## Recursos Principais
 
-For example if there is an image subfolder under your extension project workspace:
+- **Criação de Templates**: Crie facilmente arquivos de template para diversos tipos de arquivos, como JavaScript, TypeScript, HTML, CSS e muitos outros.
 
-\!\[feature X\]\(images/feature-x.png\)
+- **Geração de Arquivos**: Crie novos arquivos com base nos seus templates personalizados, preenchendo automaticamente o conteúdo dinâmico com base em um objeto de opções fornecido.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+- **Conteúdo Dinâmico**: Os templates podem ser configurados para receber um objeto de opções, permitindo a inclusão de conteúdo dinâmico no template durante a geração do arquivo.
 
-## Requirements
+## Como Usar
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## Contribua
 
-## Extension Settings
+Você pode contribuir para o desenvolvimento do Templater reportando problemas, sugerindo novos recursos ou enviando pull requests no repositório oficial: [Templater no GitHub](https://github.com/MrNaceja/templater)
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## Licença
 
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Esta extensão é distribuída sob a [Licença MIT](https://opensource.org/licenses/MIT). Sinta-se à vontade para usá-la e modificá-la de acordo com suas necessidades.

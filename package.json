@@ -1,8 +1,8 @@
 {
   "name": "templater",
-  "displayName": "templater",
-  "description": "Make your templates dynamics",
-  "version": "0.0.1",
+  "displayName": "Templater",
+  "description": "Make Your Own Dynamic Templates",
+  "version": "1.0.0",
   "author": {
     "name": "Eduardo Toriani (Naceja)",
     "email": "edutoriani13@gmail.com",
@@ -12,10 +12,16 @@
     "vscode": "^1.88.0"
   },
   "categories": [
+    "Snippets",
+    "Themes",
+    "Keymaps",
     "Other"
   ],
   "activationEvents": [],
   "main": "./out/extension.js",
+  "repository": {
+    "url": "https://github.com/MrNaceja/templater"
+  },
   "contributes": {
     "commands": [
       {
