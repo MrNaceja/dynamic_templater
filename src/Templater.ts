@@ -37,7 +37,7 @@ export default class Templater {
    * - Create a new file with content rendered by template
    */
   async newFileBasedOnTemplate(creationFileContext?: any) {
-    let pathContext = creationFileContext?._formatted ?? null;
+    let pathContext = creationFileContext?._fsPath ?? null;
     if (!pathContext) {
       if (vscode.window.activeTextEditor) {
         pathContext = vscode.window.activeTextEditor.document.fileName;
@@ -52,6 +52,7 @@ export default class Templater {
         return;
       }
     }
+
     const newFileName = await this.requestFileName();
     if (!newFileName) {
       return;

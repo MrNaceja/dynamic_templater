@@ -48,16 +48,34 @@
       ]
     },
     "configuration": {
-      "type": "object",
       "title": "Templater Configuration",
       "properties": {
         "templater.author": {
-          "type": "string",
-          "default": "Author",
+          "type": "object",
+          "title": "Author definition",
+          "properties": {
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": "Author Name"
+            },
+            "email": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": "author.name@email.com"
+            }
+          },
           "description": "Author of the file"
         },
         "templater.templatesDir": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "default": "",
           "description": "A templates custom directory"
         }

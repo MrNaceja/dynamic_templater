@@ -2,8 +2,9 @@ import * as vscode from "vscode";
 import fs from "node:fs";
 import path from "node:path";
 import { TTemplate, TTemplateModuleRender, TTemplateOptions } from "./types";
+import Configuration from "./Configuration";
 
-const TEMPLATE_EXTENSION = ".js";
+const TEMPLATE_EXTENSION = ".mjs";
 
 export default class TemplatesManager {
   createFileTemplate(templateName: string) {
@@ -27,15 +28,14 @@ export default class TemplatesManager {
   ) {
     if (this.existsTemplate(template.name)) {
       const newFileNameWithPath = path.join(pathContext, newFileName);
-
       if (fs.existsSync(pathContext)) {
         const templateOptions: TTemplateOptions = {
           currentDate: new Date(),
           filenameWithExtension: newFileName,
           filePath: pathContext,
           author: {
-            name: "a",
-            email: "b",
+            name: Configuration.get("author.name", "banana"),
+            email: Configuration.get("author.email", "banana@email.com"),
           },
         };
 
@@ -45,9 +45,11 @@ export default class TemplatesManager {
         );
         // Se o diretório realmente existe...
         fs.writeFileSync(newFileNameWithPath, templateContent);
+        return true;
       }
+      throw new Error("File existent!");
     }
-    return true;
+    throw new Error("Inexistent template!");
   }
 
   private async renderTemplateContent(
@@ -56,9 +58,11 @@ export default class TemplatesManager {
   ): Promise<string> {
     let content = "";
     try {
-      const templateModule: TTemplateModuleRender = await import(template.path);
-      // const templateModule: TTemplateModuleRender = require(template.path);
-      content = templateModule(options);
+      const templateModulePath = vscode.Uri.file(template.path).toString();
+      const templateRender: TTemplateModuleRender = (
+        await import(templateModulePath)
+      ).default;
+      content = templateRender(options);
     } catch (e) {
       throw new Error("An error as ocurred rendering a template.");
     }
@@ -83,17 +87,16 @@ export default class TemplatesManager {
  * @property {string?} name
  * @property {string?} email
  *
- * @type {TTemplateOptions} options
+ * @typedef {(TTemplateOptions) => string} TTemplateRender
+ * @type {TTemplateRender} TTemplateRender
  */
 export default (options) => \`
-
 /**
  * This is a \${options.filenameWithExtension\} file created with template! :)
  * 
  * @author \${\`\${options.author.name\} - \${options.author.email\}\`\} 
  * @since \${options.currentDate.toLocaleDateString()}
  */
-
 \`;
 `;
   }
