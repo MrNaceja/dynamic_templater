@@ -34,9 +34,10 @@ export default class TemplatesManager {
           currentDate: new Date(),
           filenameWithExtension: newFileName,
           filePath: pathContext,
+          customOptions: Configuration.get("customOptions", {}),
           author: {
-            name: Configuration.get("author.name", "banana"),
-            email: Configuration.get("author.email", "banana@email.com"),
+            name: Configuration.get("author.name"),
+            email: Configuration.get("author.email"),
           },
         };
 
@@ -62,9 +63,19 @@ export default class TemplatesManager {
       const templateRender: TTemplateModuleRender = (
         await import(templateModulePath)
       ).default;
-      content = templateRender(options);
+      try {
+        content = templateRender(options);
+      } catch (e) {
+        throw new SyntaxError(
+          "Your template has sintax errors: " + e!.toString()
+        );
+      }
     } catch (e) {
-      throw new Error("An error as ocurred rendering a template.");
+      let _error = "An error as ocurred rendering a template.";
+      if (e instanceof SyntaxError) {
+        _error = e.message;
+      }
+      throw new Error(_error);
     }
     return content;
   }

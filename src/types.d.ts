@@ -11,6 +11,7 @@ export type TTemplateOptions = {
   filenameWithExtension: string;
   filePath: string;
   author: TOptionAuthor;
+  customOptions: Object;
 };
 
 export type TOptionAuthor = {

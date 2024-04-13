@@ -39,34 +39,26 @@
       ]
     },
     "configuration": {
-      "title": "Templater Configuration",
+      "title": "Templater",
       "properties": {
-        "templater.author": {
+        "templater.author.name": {
+          "type": "string",
+          "default": "Author"
+        },
+        "templater.author.email": {
+          "type": "string",
+          "default": "author@email.com"
+        },
+        "templater.customOptions": {
           "type": "object",
-          "title": "Author definition",
-          "properties": {
-            "name": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "default": "Author Name"
-            },
-            "email": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "default": "author.name@email.com"
-            }
+          "default": {
+            "customValue": "Wowwww is a custom value parameter :)"
           },
-          "description": "Author of the file"
+          "title": "Custom options to template render",
+          "description": "Defines your custom options sended to template render as customOptions in options parameter."
         },
         "templater.templatesDir": {
-          "type": [
-            "string",
-            "null"
-          ],
+          "type": "string",
           "default": "",
           "description": "A templates custom directory"
         }

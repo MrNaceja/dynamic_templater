@@ -85,7 +85,7 @@ export default class Templater {
       if (e instanceof Error) {
         _error = e.message;
       }
-      vscode.window.showInformationMessage(_error);
+      vscode.window.showErrorMessage(_error);
     }
   }
 
