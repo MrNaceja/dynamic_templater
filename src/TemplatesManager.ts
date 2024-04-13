@@ -18,7 +18,7 @@ export default class TemplatesManager {
       this.templatePath(templateName),
       this.getTemplateEstructure()
     );
-    return true;
+    return this.templatePath(templateName);
   }
 
   async createNewFileBasedOnTemplate(
@@ -29,6 +29,7 @@ export default class TemplatesManager {
     if (this.existsTemplate(template.name)) {
       const newFileNameWithPath = path.join(pathContext, newFileName);
       if (fs.existsSync(pathContext)) {
+        // Directory to create file exists?
         const templateOptions: TTemplateOptions = {
           currentDate: new Date(),
           filenameWithExtension: newFileName,
@@ -43,9 +44,8 @@ export default class TemplatesManager {
           template,
           templateOptions
         );
-        // Se o diretório realmente existe...
         fs.writeFileSync(newFileNameWithPath, templateContent);
-        return true;
+        return newFileNameWithPath;
       }
       throw new Error("File existent!");
     }

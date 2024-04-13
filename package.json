@@ -1,7 +1,7 @@
 {
   "name": "templater",
   "displayName": "templater",
-  "description": "Make your templates",
+  "description": "Make your templates dynamics",
   "version": "0.0.1",
   "author": {
     "name": "Eduardo Toriani (Naceja)",
@@ -26,20 +26,11 @@
       {
         "command": "templater.newFile",
         "title": "Create new File based on Template",
-        "category": "Templater"
+        "category": "Templater",
+        "enablement": "explorerViewletFocus && explorerViewletVisible"
       }
     ],
     "menus": {
-      "editor/context": [
-        {
-          "command": "templater.newTemplate",
-          "group": "Templater"
-        },
-        {
-          "command": "templater.newFile",
-          "group": "Templater"
-        }
-      ],
       "explorer/context": [
         {
           "command": "templater.newFile",

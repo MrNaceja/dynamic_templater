@@ -8,7 +8,7 @@ export default class Templater {
   /**
    * Create a new file template.
    * - Request to DEV a template name.
-   * - Create a file template inside the templates folder default (or custom if configured).
+   * - Create a file template inside the templates folder default (or custom if defined).
    */
   async newTemplate() {
     const templateName = await this.requestTemplateName();
@@ -16,7 +16,13 @@ export default class Templater {
       return;
     }
     try {
-      if (this.#templatesManager.createFileTemplate(templateName)) {
+      const createdFilePath =
+        this.#templatesManager.createFileTemplate(templateName);
+      if (createdFilePath) {
+        vscode.commands.executeCommand(
+          "vscode.open",
+          vscode.Uri.file(createdFilePath)
+        );
         vscode.window.showInformationMessage(
           `Template ${templateName} created with sucessful. 🥳`
         );
@@ -37,17 +43,14 @@ export default class Templater {
    * - Create a new file with content rendered by template
    */
   async newFileBasedOnTemplate(creationFileContext?: any) {
-    let pathContext = creationFileContext?._fsPath ?? null;
+    let pathContext: string | null = creationFileContext?._fsPath ?? null;
     if (!pathContext) {
-      if (vscode.window.activeTextEditor) {
-        pathContext = vscode.window.activeTextEditor.document.fileName;
-      }
       if (!pathContext) {
         pathContext = vscode.workspace.workspaceFile?.fsPath ?? null;
       }
       if (!pathContext) {
         vscode.window.showErrorMessage(
-          "Sorry, an error as ocurred trying create file."
+          "Sorry, is not possible create a file over here."
         );
         return;
       }
@@ -62,12 +65,17 @@ export default class Templater {
       return;
     }
     try {
-      const sucess = await this.#templatesManager.createNewFileBasedOnTemplate(
-        templateSelected,
-        newFileName,
-        pathContext
-      );
-      if (sucess) {
+      const createdFilePath =
+        await this.#templatesManager.createNewFileBasedOnTemplate(
+          templateSelected,
+          newFileName,
+          pathContext
+        );
+      if (createdFilePath) {
+        vscode.commands.executeCommand(
+          "vscode.open",
+          vscode.Uri.file(createdFilePath)
+        );
         vscode.window.showInformationMessage(
           `New File ${newFileName} created with sucessful. 🥳`
         );
