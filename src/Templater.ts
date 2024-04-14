@@ -66,7 +66,7 @@ export default class Templater {
     }
     try {
       const createdFilePath =
-        await this.#templatesManager.createNewFileBasedOnTemplate(
+        this.#templatesManager.createNewFileBasedOnTemplate(
           templateSelected,
           newFileName,
           pathContext

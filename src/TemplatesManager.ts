@@ -4,7 +4,7 @@ import path from "node:path";
 import { TTemplate, TTemplateModuleRender, TTemplateOptions } from "./types";
 import Configuration from "./Configuration";
 
-const TEMPLATE_EXTENSION = ".mjs";
+const TEMPLATE_EXTENSION = ".js";
 
 export default class TemplatesManager {
   /**
@@ -27,7 +27,7 @@ export default class TemplatesManager {
   /**
    * Manage a creation of new file based on template.
    */
-  async createNewFileBasedOnTemplate(
+  createNewFileBasedOnTemplate(
     template: TTemplate,
     newFileName: string,
     pathContext: string
@@ -47,7 +47,7 @@ export default class TemplatesManager {
           },
         };
 
-        const templateContent = await this.renderTemplateContent(
+        const templateContent = this.renderTemplateContent(
           template,
           templateOptions
         );
@@ -62,16 +62,13 @@ export default class TemplatesManager {
   /**
    * Read a module template file rendering internal content.
    */
-  private async renderTemplateContent(
+  private renderTemplateContent(
     template: TTemplate,
     options: TTemplateOptions
-  ): Promise<string> {
+  ): string {
     let content = "";
     try {
-      const templateModulePath = vscode.Uri.file(template.path).toString();
-      const templateRender: TTemplateModuleRender = (
-        await import(templateModulePath)
-      ).default;
+      const templateRender: TTemplateModuleRender = require(template.path);
       try {
         content = templateRender(options);
       } catch (e) {
@@ -112,7 +109,7 @@ export default class TemplatesManager {
       " * @typedef {(options: TTemplateOptions) => string} TTemplateRender\n" +
       " * @type {TTemplateRender} TTemplateRender\n" +
       " */\n" +
-      "export default (options) =>\n" +
+      "module.exports = (options) =>\n" +
       "  `\n" +
       "/**\n" +
       "* This is a ${options.filenameWithExtension} file created with template! :)\n" +
