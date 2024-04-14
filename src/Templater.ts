@@ -17,7 +17,7 @@ export default class Templater {
     }
     try {
       const createdFilePath =
-        this.#templatesManager.createFileTemplate(templateName);
+        this.#templatesManager.createNewFileTemplate(templateName);
       if (createdFilePath) {
         vscode.commands.executeCommand(
           "vscode.open",
@@ -101,7 +101,7 @@ export default class Templater {
       })
       .then(async (templateName) => {
         if (!templateName) {
-          vscode.window.showErrorMessage("Opss, we need a template name!");
+          vscode.window.showErrorMessage("Opss, we need a template name.");
           return false;
         }
         return templateName.includes(".")
@@ -122,12 +122,12 @@ export default class Templater {
       })
       .then(async (fileName) => {
         if (!fileName) {
-          vscode.window.showErrorMessage("Opss, we need a file name!");
+          vscode.window.showErrorMessage("Opss, we need a file name.");
           return false;
         }
         if (!fileName.includes(".")) {
           vscode.window.showErrorMessage(
-            "Opss, we need a file name with extension!"
+            "Opss, we need a file name with extension."
           );
           return false;
         }
@@ -155,7 +155,7 @@ export default class Templater {
       .then((templateSelected) => {
         if (!templateSelected) {
           vscode.window.showErrorMessage(
-            "Opss, you need select a template to continue!"
+            "Opss, you need select a template to continue."
           );
           return false;
         }

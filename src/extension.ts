@@ -1,7 +1,9 @@
 import * as vscode from "vscode";
 import Templater from "./Templater";
+import { ContextManager } from "./ContextManager";
 
 export function activate(context: vscode.ExtensionContext) {
+  ContextManager.use(context);
   const templater = new Templater();
 
   /**

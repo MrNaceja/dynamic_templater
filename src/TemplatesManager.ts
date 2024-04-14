@@ -3,45 +3,51 @@ import fs from "node:fs";
 import path from "node:path";
 import { TTemplate, TTemplateModuleRender, TTemplateOptions } from "./types";
 import Configuration from "./Configuration";
+import { ContextManager } from "./ContextManager";
 
 const TEMPLATE_EXTENSION = ".js";
 
 export default class TemplatesManager {
-  /**
-   * Manage a creation of new template file.
-   */
-  createFileTemplate(templateName: string) {
-    if (this.existsTemplate(templateName)) {
-      throw new Error(
-        "The template name already exists, please choose other name."
-      );
-    }
-
-    fs.writeFileSync(
-      this.templatePath(templateName),
+  constructor() {
+    ContextManager.saveState(
+      "defaultTemplate",
       this.getTemplateRenderEstructure()
     );
-    return this.templatePath(templateName);
+  }
+
+  /**
+   * Manage a creation of new template file with template content renderized.
+   * @see Templater.ts
+   */
+  createNewFileTemplate(templateName: string) {
+    return this.createFileTemplate(
+      templateName,
+      this.getTemplateRenderEstructure()
+    );
   }
 
   /**
    * Manage a creation of new file based on template.
+   * @see Templater.ts
    */
   createNewFileBasedOnTemplate(
     template: TTemplate,
     newFileName: string,
-    pathContext: string
+    createFileDirectoryPath: string
   ) {
     if (this.existsTemplate(template.name)) {
-      const newFileNameWithPath = path.join(pathContext, newFileName);
-      if (fs.existsSync(pathContext)) {
+      const newFileNameWithPath = path.join(
+        createFileDirectoryPath,
+        newFileName
+      );
+      if (fs.existsSync(createFileDirectoryPath)) {
         // Directory to create file exists?
         const templateOptions: TTemplateOptions = {
           createdFile: {
             fileName: path.basename(newFileName, path.extname(newFileName)),
             extension: path.extname(newFileName),
-            directoryFolderName: path.basename(pathContext),
-            directoryPath: pathContext,
+            directoryFolderName: path.basename(createFileDirectoryPath),
+            directoryPath: createFileDirectoryPath,
           },
           author: {
             name: Configuration.get("author.name"),
@@ -57,9 +63,9 @@ export default class TemplatesManager {
         fs.writeFileSync(newFileNameWithPath, templateContent);
         return newFileNameWithPath;
       }
-      throw new Error("File existent!");
+      throw new Error("The directory to create a file not exists.");
     }
-    throw new Error("Inexistent template!");
+    throw new Error("Inexistent template.");
   }
 
   /**
@@ -90,82 +96,76 @@ export default class TemplatesManager {
   }
 
   /**
-   * Returns the template render estructure default as module exports.
+   * Returns the template render estructure default with module exports.
    */
   private getTemplateRenderEstructure(): string {
-    if (this.existsTemplate("default")) {
-      return fs.readFileSync(this.templatePath("default"), "utf8");
+    const templateDefault = this.existsTemplate("default")
+      ? fs.readFileSync(this.templateFilePath("default"), "utf8")
+      : ContextManager.useState("defaultTemplate");
+    if (!templateDefault.length) {
+      throw new Error("Sorry, Cannot retrieve a template renderer default.");
     }
-    return (
-      "/**\n" +
-      " * @typedef  {Object       } TTemplateOptions\n" +
-      " * @property {Date         } currentDate\n" +
-      " * @property {string       } filenameWithExtension\n" +
-      " * @property {string       } filePath\n" +
-      " * @property {TOptionAuthor} author\n" +
-      " * @property {Object       } customOptions\n" +
-      " *\n" +
-      " * @typedef  {Object } TOptionAuthor\n" +
-      " * @property {string?} name\n" +
-      " * @property {string?} email\n" +
-      " *\n" +
-      " * @typedef {(options: TTemplateOptions) => string} TTemplateRender\n" +
-      " * @type {TTemplateRender} TTemplateRender\n" +
-      " */\n" +
-      "module.exports = (options) =>\n" +
-      "  `\n" +
-      "/**\n" +
-      "* This is a ${options.filenameWithExtension} file created with template! :)\n" +
-      "* @internal ${options.customOptions.customValue}\n" +
-      "* @author ${`${options.author.name} - ${options.author.email}`} \n" +
-      "* @since ${options.currentDate.toLocaleDateString()}\n" +
-      "*/\n" +
-      "  `.trim();"
-    );
+    return templateDefault;
+  }
+
+  /**
+   * Create a template file on templates directory.
+   * @returns {string} Path to created template file
+   */
+  public createFileTemplate(templateName: string, content: string): string {
+    if (this.existsTemplate(templateName)) {
+      throw new Error(
+        "The template name already exists, please choose other name."
+      );
+    }
+    this.createTemplatesDirIfNotExists();
+    fs.writeFileSync(this.templateFilePath(templateName), content);
+    return this.templateFilePath(templateName);
   }
 
   /**
    * Verify if a template already exists.
    */
-  public existsTemplate(templateName: string): boolean {
-    return fs.existsSync(this.templatePath(templateName));
+  private existsTemplate(templateName: string): boolean {
+    return fs.existsSync(this.templateFilePath(templateName));
+  }
+
+  /**
+   * Verify if a template directory exists (checking a custom templates dir).
+   */
+  private existsTemplatesDir() {
+    return fs.existsSync(this.templatesDirPath());
   }
 
   /**
    * Mount a template name with full path.
    * @example Example: .../templates/template.js
    */
-  public templatePath = (templateName: string): string => {
-    return path.join(this.templatesDir(), templateName + TEMPLATE_EXTENSION);
+  private templateFilePath = (templateName: string): string => {
+    return path.join(
+      this.templatesDirPath(),
+      templateName + TEMPLATE_EXTENSION
+    );
   };
 
   /**
-   * Mount a template directory full path (verify if has a custom templates directory on configuration).
+   * Mount a template directory full path.
    * @example .../templates
    */
-  public templatesDir(): string {
-    let templatesDir = vscode.workspace
+  private templatesDirPath(): string {
+    let customTemplatesDir = vscode.workspace
       .getConfiguration()
       .get("templatesDir", null);
-
-    // Se existir um diretório de templates personalizado configurado utiliza este
-    if (templatesDir) {
-      if (!fs.existsSync(templatesDir)) {
-        this.createTemplatesDir(templatesDir);
-      }
-      return templatesDir;
-    }
-
-    return path.join(__dirname, "templates");
+    return customTemplatesDir ?? path.join(__dirname, "templates");
   }
 
   /**
    * Create a templates directory.
    */
-  private createTemplatesDir(templatesDirName: string) {
+  private createTemplatesDirIfNotExists() {
     try {
-      if (!fs.existsSync(templatesDirName)) {
-        fs.mkdirSync(templatesDirName);
+      if (!this.existsTemplatesDir()) {
+        fs.mkdirSync(this.templatesDirPath());
       }
     } catch (e) {
       console.log(e);
@@ -180,14 +180,17 @@ export default class TemplatesManager {
    */
   public useTemplates = (): Promise<Map<string, TTemplate>> => {
     return new Promise((resolve, reject) => {
-      fs.readdir(this.templatesDir(), (error, filesTemplate) => {
+      fs.readdir(this.templatesDirPath(), (error, filesTemplate) => {
         if (error) {
           return reject(error);
         }
         const templates: Map<string, TTemplate> = new Map();
-        const templatesDir = this.templatesDir();
+        const templatesDir = this.templatesDirPath();
         filesTemplate.forEach((templateFile) => {
-          let templateName = templateFile.split(".").at(0) as string;
+          const templateName = path.basename(
+            templateFile,
+            path.extname(templateFile)
+          );
           if (!templates.has(templateName)) {
             templates.set(templateName, {
               name: templateName,

@@ -9,7 +9,7 @@ export type TTemplateModuleRender = (options: TTemplateOptions) => string;
 export type TTemplateOptions = {
   createdFile: TTemplateOptionCreatedFile;
   author: TOptionAuthor;
-  customOptions: Object;
+  customOptions: any;
 };
 
 export type TTemplateOptionCreatedFile = {
