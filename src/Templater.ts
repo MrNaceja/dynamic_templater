@@ -55,15 +55,16 @@ export default class Templater {
         return;
       }
     }
+    const templateSelected = await this.requestTemplateSelection();
+    if (!templateSelected) {
+      return;
+    }
 
     const newFileName = await this.requestFileName();
     if (!newFileName) {
       return;
     }
-    const templateSelected = await this.requestTemplateSelection();
-    if (!templateSelected) {
-      return;
-    }
+
     try {
       const createdFilePath =
         this.#templatesManager.createNewFileBasedOnTemplate(
@@ -101,7 +102,6 @@ export default class Templater {
       })
       .then(async (templateName) => {
         if (!templateName) {
-          vscode.window.showErrorMessage("Opss, we need a template name.");
           return false;
         }
         return templateName.includes(".")
@@ -141,24 +141,25 @@ export default class Templater {
     const templates = await this.#templatesManager.useTemplates();
     const templateOptions = Array.from(templates.values());
     return await vscode.window
-      .showQuickPick(
+      .showQuickPick<vscode.QuickPickItem & { template: string }>(
         templateOptions.map((template) => ({
+          template: template.name,
           label:
             template.name.at(0)?.toUpperCase() + template.name.substring(1),
-          template,
+          description: template.filename,
+          iconPath: new vscode.ThemeIcon("file-code"),
+          picked: template.name === "default",
         })),
         {
-          placeHolder: "Select a template to create based on",
+          placeHolder: "Select a template to create based on this",
+          title: "Choose a Template",
         }
       )
       .then((templateSelected) => {
         if (!templateSelected) {
-          vscode.window.showErrorMessage(
-            "Opss, you need select a template to continue."
-          );
           return false;
         }
-        return templates.get(templateSelected.template.name) as TTemplate;
+        return templates.get(templateSelected.template) as TTemplate;
       });
   };
 }

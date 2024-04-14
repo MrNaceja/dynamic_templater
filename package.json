@@ -4,7 +4,7 @@
   "description": "Make Your Own Dynamic Templates",
   "publisher": "Naceja",
   "license": "MIT",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "author": {
     "name": "Eduardo Toriani (Naceja)",
     "email": "edutoriani13@gmail.com",
@@ -28,12 +28,12 @@
     "commands": [
       {
         "command": "templater.newTemplate",
-        "title": "Create new Template",
+        "title": "new Template",
         "category": "Templater"
       },
       {
         "command": "templater.newFile",
-        "title": "Create new File based on Template",
+        "title": "New File Based on Template",
         "category": "Templater",
         "enablement": "explorerViewletFocus && explorerViewletVisible"
       }
@@ -42,7 +42,7 @@
       "explorer/context": [
         {
           "command": "templater.newFile",
-          "group": "Templater"
+          "group": "navigation"
         }
       ]
     },
