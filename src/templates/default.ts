@@ -15,8 +15,8 @@ import { TTemplateOptions } from "../types";
  * @property {string?} name
  * @property {string?} email
  *
- * @typedef {(options: TTemplateOptions) => string} TTemplateRender
- * @type {TTemplateRender} TTemplateRender
+ * @typedef {(options: TTemplateOptions) => string} TTemplateModuleRender
+ * @type {TTemplateModuleRender}
  */
 module.exports = (options: TTemplateOptions): string =>
   `

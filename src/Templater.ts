@@ -122,7 +122,6 @@ export default class Templater {
       })
       .then(async (fileName) => {
         if (!fileName) {
-          vscode.window.showErrorMessage("Opss, we need a file name.");
           return false;
         }
         if (!fileName.includes(".")) {
