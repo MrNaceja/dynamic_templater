@@ -2,6 +2,8 @@
   "name": "templater",
   "displayName": "Templater",
   "description": "Make Your Own Dynamic Templates",
+  "publisher": "Naceja",
+  "license": "MIT",
   "version": "1.0.0",
   "author": {
     "name": "Eduardo Toriani (Naceja)",
