@@ -7,11 +7,16 @@ export type TTemplate = {
 export type TTemplateModuleRender = (options: TTemplateOptions) => string;
 
 export type TTemplateOptions = {
-  currentDate: Date;
-  filenameWithExtension: string;
-  filePath: string;
+  createdFile: TTemplateOptionCreatedFile;
   author: TOptionAuthor;
   customOptions: Object;
+};
+
+export type TTemplateOptionCreatedFile = {
+  fileName: string;
+  extension: string;
+  directoryFolderName: string;
+  directoryPath: string;
 };
 
 export type TOptionAuthor = {

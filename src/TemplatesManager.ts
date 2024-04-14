@@ -37,14 +37,17 @@ export default class TemplatesManager {
       if (fs.existsSync(pathContext)) {
         // Directory to create file exists?
         const templateOptions: TTemplateOptions = {
-          currentDate: new Date(),
-          filenameWithExtension: newFileName,
-          filePath: pathContext,
-          customOptions: Configuration.get("customOptions", {}),
+          createdFile: {
+            fileName: path.basename(newFileName, path.extname(newFileName)),
+            extension: path.extname(newFileName),
+            directoryFolderName: path.basename(pathContext),
+            directoryPath: pathContext,
+          },
           author: {
             name: Configuration.get("author.name"),
             email: Configuration.get("author.email"),
           },
+          customOptions: Configuration.get("customOptions", {}),
         };
 
         const templateContent = this.renderTemplateContent(
