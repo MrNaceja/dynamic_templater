@@ -1,10 +1,10 @@
 import * as vscode from "vscode";
-import Templater from "./Templater";
+import DynamicTemplater from "./DynamicTemplater";
 import { ContextManager } from "./ContextManager";
 
 export function activate(context: vscode.ExtensionContext) {
   ContextManager.use(context);
-  const templater = new Templater();
+  const engine = new DynamicTemplater();
 
   /**
    * Create a new file template.
@@ -12,8 +12,8 @@ export function activate(context: vscode.ExtensionContext) {
    * - Create a file template inside the templates folder default (or custom if defined).
    */
   const newTemplateCommand = vscode.commands.registerCommand(
-    "templater.newTemplate",
-    templater.newTemplate.bind(templater)
+    "dynamic_templater.newTemplate",
+    engine.newTemplate.bind(engine)
   );
 
   /**
@@ -25,8 +25,8 @@ export function activate(context: vscode.ExtensionContext) {
    * This command is visible only on context menu explorer...
    */
   const newFileBasedOnTemplateCommand = vscode.commands.registerCommand(
-    "templater.newFile",
-    templater.newFileBasedOnTemplate.bind(templater)
+    "dynamic_templater.newFile",
+    engine.newFileBasedOnTemplate.bind(engine)
   );
 
   context.subscriptions.push(newTemplateCommand, newFileBasedOnTemplateCommand);

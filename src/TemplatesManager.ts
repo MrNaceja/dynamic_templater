@@ -17,7 +17,7 @@ export default class TemplatesManager {
 
   /**
    * Manage a creation of new template file with template content renderized.
-   * @see Templater.ts
+   * @see DynamicTemplater.ts
    */
   createNewFileTemplate(templateName: string) {
     return this.createFileTemplate(
@@ -28,7 +28,7 @@ export default class TemplatesManager {
 
   /**
    * Manage a creation of new file based on template.
-   * @see Templater.ts
+   * @see DynamicTemplater.ts
    */
   createNewFileBasedOnTemplate(
     template: TTemplate,

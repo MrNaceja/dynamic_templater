@@ -1,6 +1,6 @@
 {
-  "name": "templater",
-  "displayName": "Templater",
+  "name": "dynamic_templater",
+  "displayName": "Dynamic Templater",
   "description": "Dinamic Templates Creator",
   "publisher": "Naceja",
   "license": "MIT",
@@ -23,42 +23,42 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "repository": {
-    "url": "https://github.com/MrNaceja/templater"
+    "url": "https://github.com/MrNaceja/dynamic_templater"
   },
   "contributes": {
     "commands": [
       {
-        "command": "templater.newTemplate",
+        "command": "dynamic_templater.newTemplate",
         "title": "new Template",
-        "category": "Templater"
+        "category": "Dynamic Templater"
       },
       {
-        "command": "templater.newFile",
+        "command": "dynamic_templater.newFile",
         "title": "New File Based on Template",
-        "category": "Templater",
+        "category": "Dynamic Templater",
         "enablement": "explorerViewletFocus && explorerViewletVisible"
       }
     ],
     "menus": {
       "explorer/context": [
         {
-          "command": "templater.newFile",
+          "command": "dynamic_templater.newFile",
           "group": "navigation"
         }
       ]
     },
     "configuration": {
-      "title": "Templater",
+      "title": "Dynamic Templater",
       "properties": {
-        "templater.author.name": {
+        "dynamic_templater.author.name": {
           "type": "string",
           "default": "Author"
         },
-        "templater.author.email": {
+        "dynamic_templater.author.email": {
           "type": "string",
           "default": "author@email.com"
         },
-        "templater.customOptions": {
+        "dynamic_templater.customOptions": {
           "type": "object",
           "default": {
             "customValue": "Wowwww is a custom value parameter :)"
@@ -66,7 +66,7 @@
           "title": "Custom options to template render",
           "description": "Defines your custom options sended to template render as customOptions in options parameter."
         },
-        "templater.templatesDir": {
+        "dynamic_templater.templatesDir": {
           "type": "string",
           "default": "",
           "description": "A templates custom directory"

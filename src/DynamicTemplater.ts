@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import TemplatesManager from "./TemplatesManager";
 import { TTemplate } from "./types";
 
-export default class Templater {
+export default class DynamicTemplater {
   #templatesManager = new TemplatesManager();
 
   /**
