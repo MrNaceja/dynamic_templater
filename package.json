@@ -1,7 +1,7 @@
 {
   "name": "templater",
   "displayName": "Templater",
-  "description": "Make Your Own Dynamic Templates",
+  "description": "Dinamic Templates Creator",
   "publisher": "Naceja",
   "license": "MIT",
   "version": "1.0.8",
@@ -10,6 +10,7 @@
     "email": "edutoriani13@gmail.com",
     "url": "https://github.com/MrNaceja"
   },
+  "icon": "static/icon.png",
   "engines": {
     "vscode": "^1.88.0"
   },
