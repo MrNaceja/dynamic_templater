@@ -1,9 +1,11 @@
 import * as vscode from "vscode";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { TTemplate, TTemplateModuleRender, TTemplateOptions } from "./types";
 import Configuration from "./Configuration";
 import { ContextManager } from "./ContextManager";
+import { exec } from "node:child_process";
 
 const TEMPLATE_EXTENSION = ".js";
 
@@ -124,6 +126,31 @@ export default class TemplatesManager {
   }
 
   /**
+   * Open a templates folder in file eplorer of OS.
+   */
+  public openTemplatesDirectoryInFileExplorer() {
+    if (!this.existsTemplatesDir()) {
+      throw new Error("Templates directory not found.");
+    }
+    const platformsCommands = {
+      win32: "explorer",
+      linux: "xdg-open",
+      darwin: "open",
+    };
+    const platform = os.platform() as keyof typeof platformsCommands;
+    if (!Object.keys(platformsCommands).includes(platform)) {
+      throw new Error("Cannot open Templates Directory. (Unknown Platform)");
+    }
+    const command = platformsCommands[platform] as string;
+    const templatesDirectory = this.templatesDirPath();
+    try {
+      exec(`${command} ${templatesDirectory}`);
+    } catch (e) {
+      throw new Error("Cannot open Templates Directory. (Internal Error)");
+    }
+  }
+
+  /**
    * Verify if a template already exists.
    */
   private existsTemplate(templateName: string): boolean {
@@ -152,7 +179,7 @@ export default class TemplatesManager {
    * Mount a template directory full path.
    * @example .../templates
    */
-  private templatesDirPath(): string {
+  public templatesDirPath(): string {
     let customTemplatesDir = vscode.workspace
       .getConfiguration()
       .get("templatesDir", null);
@@ -168,7 +195,6 @@ export default class TemplatesManager {
         fs.mkdirSync(this.templatesDirPath());
       }
     } catch (e) {
-      console.log(e);
       throw new Error(
         "A error ocurred when trying create a templates directory."
       );

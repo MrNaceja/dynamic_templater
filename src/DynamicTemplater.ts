@@ -91,6 +91,21 @@ export default class DynamicTemplater {
   }
 
   /**
+   * Open a current templates folder.
+   */
+  openTemplatesDirectory() {
+    try {
+      this.#templatesManager.openTemplatesDirectoryInFileExplorer();
+    } catch (e) {
+      let _error = "An Error as ocurred when try open templates directory.";
+      if (e instanceof Error) {
+        _error = e.message;
+      }
+      vscode.window.showErrorMessage(_error);
+    }
+  }
+
+  /**
    * Request the template name for DEV by VSCode UI.
    */
   private requestTemplateName = async (): Promise<string | false> => {

@@ -37,6 +37,11 @@
         "title": "New File Based on Template",
         "category": "Dynamic Templater",
         "enablement": "explorerViewletFocus && explorerViewletVisible"
+      },
+      {
+        "command": "dynamic_templater.openTemplatesDirectory",
+        "title": "Open Templates Directory",
+        "category": "Dynamic Templater"
       }
     ],
     "menus": {

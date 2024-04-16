@@ -29,5 +29,13 @@ export function activate(context: vscode.ExtensionContext) {
     engine.newFileBasedOnTemplate.bind(engine)
   );
 
+  /**
+   * Open a current templates folder.
+   */
+  const openTemplatesDirectoryCommand = vscode.commands.registerCommand(
+    "dynamic_templater.openTemplatesDirectory",
+    engine.openTemplatesDirectory.bind(engine)
+  );
+
   context.subscriptions.push(newTemplateCommand, newFileBasedOnTemplateCommand);
 }
