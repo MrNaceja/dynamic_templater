@@ -4,7 +4,7 @@
   "description": "Dinamic Templates Creator",
   "publisher": "Naceja",
   "license": "MIT",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": {
     "name": "Eduardo Toriani (Naceja)",
     "email": "edutoriani13@gmail.com",
@@ -12,7 +12,7 @@
   },
   "icon": "static/icon.png",
   "engines": {
-    "vscode": "^1.88.0"
+    "vscode": "^1.86.0"
   },
   "categories": [
     "Snippets",
@@ -28,12 +28,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "dynamic_templater.newTemplate",
+        "command": "dynamictemplater.newTemplate",
         "title": "new Template",
         "category": "Dynamic Templater"
       },
       {
-        "command": "dynamic_templater.newFile",
+        "command": "dynamictemplater.newFile",
         "title": "New File Based on Template",
         "category": "Dynamic Templater",
         "enablement": "explorerViewletFocus && explorerViewletVisible"
@@ -42,7 +42,7 @@
     "menus": {
       "explorer/context": [
         {
-          "command": "dynamic_templater.newFile",
+          "command": "dynamictemplater.newFile",
           "group": "navigation"
         }
       ]
@@ -50,23 +50,22 @@
     "configuration": {
       "title": "Dynamic Templater",
       "properties": {
-        "dynamic_templater.author.name": {
+        "dynamicTemplater.author.name": {
           "type": "string",
           "default": "Author"
         },
-        "dynamic_templater.author.email": {
+        "dynamicTemplater.author.email": {
           "type": "string",
           "default": "author@email.com"
         },
-        "dynamic_templater.customOptions": {
+        "dynamicTemplater.customOptions": {
           "type": "object",
           "default": {
             "customValue": "Wowwww is a custom value parameter :)"
           },
-          "title": "Custom options to template render",
           "description": "Defines your custom options sended to template render as customOptions in options parameter."
         },
-        "dynamic_templater.templatesDir": {
+        "dynamicTemplater.templatesDir": {
           "type": "string",
           "default": "",
           "description": "A templates custom directory"

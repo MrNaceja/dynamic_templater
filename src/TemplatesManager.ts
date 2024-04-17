@@ -1,4 +1,3 @@
-import * as vscode from "vscode";
 import fs from "node:fs";
 import path from "node:path";
 import { TTemplate, TTemplateModuleRender, TTemplateOptions } from "./types";
@@ -50,10 +49,10 @@ export default class TemplatesManager {
             directoryPath: createFileDirectoryPath,
           },
           author: {
-            name: Configuration.get("author.name"),
-            email: Configuration.get("author.email"),
+            name: Configuration.read("author.name", ""),
+            email: Configuration.read("author.email", ""),
           },
-          customOptions: Configuration.get("customOptions", {}),
+          customOptions: Configuration.read<Object>("customOptions", {}),
         };
 
         const templateContent = this.renderTemplateContent(
@@ -153,10 +152,10 @@ export default class TemplatesManager {
    * @example .../templates
    */
   private templatesDirPath(): string {
-    let customTemplatesDir = vscode.workspace
-      .getConfiguration()
-      .get("templatesDir", null);
-    return customTemplatesDir ?? path.join(__dirname, "templates");
+    return Configuration.read(
+      "templatesDir",
+      path.join(__dirname, "templates")
+    );
   }
 
   /**
@@ -168,7 +167,6 @@ export default class TemplatesManager {
         fs.mkdirSync(this.templatesDirPath());
       }
     } catch (e) {
-      console.log(e);
       throw new Error(
         "A error ocurred when trying create a templates directory."
       );
