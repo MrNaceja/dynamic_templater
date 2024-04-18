@@ -42,10 +42,16 @@ The Dynamic Templater extension for Visual Studio Code provides a simple and eff
 
 ## Available Settings
 
-- `dynamic_templater.author.name`: Define the author's name, this value will be available in the 'options.author.name' parameter of the Template's render function.
-- `dynamic_templater.author.email`: Set the author's email, this value will be available in the 'options.author.email' parameter of the Template's render function.
-- `dynamic_templater.customOptions`: Defines an object of additional custom options that will be sent to the template render and will be accessible in `options.customOptions`.
-- `dynamic_templater.templatesDir`: Allows you to define a custom directory for managing the templates (Default: C:\Users\your_user\.vscode\extensions\naceja.dynamic_templater-x.x.x\out\templates).
+- `dynamicTemplater.author.name`: Define the author's name, this value will be available in the 'options.author.name' parameter of the Template's render function.
+- `dynamicTemplater.author.email`: Set the author's email, this value will be available in the 'options.author.email' parameter of the Template's render function.
+- `dynamicTemplater.customOptions`: Defines an object of additional custom options that will be sent to the template render and will be accessible in `options.customOptions`.
+- `dynamicTemplater.templatesDir`: Allows you to define a custom directory for managing the templates (Default: C:\Users\your_user\.vscode\extensions\naceja.dynamictemplater-x.x.x\out\templates).
+
+## Available Commands
+
+- **Dynamic Templater:**`newFile`: Create a new file based on template (Available only on EXPLORER Context Menu).
+- **Dynamic Templater:**`newTemplate`: Create a new Template File.
+- **Dynamic Templater:**`openTemplatesDirectory`: Open a current templates directory on file explorer.
 
 ## Template File
 
@@ -97,10 +103,16 @@ A extensão Dynamic Templater para o Visual Studio Code oferece uma maneira simp
 
 ## Configurações disponíveis
 
-- `dynamic_templater.author.name`: Define o nome do autor, este valor estará disponível em `options.author.name` parâmetro da função render do Template.
-- `dynamic_templater.author.email`: Define o email do autor, este valor estará disponível em `options.author.email` parâmetro da função render do Template.
-- `dynamic_templater.customOptions`: Define um objeto de opções adicionais customizadas que serão enviadas ao render do template e estarão acessíveis em `options.customOptions`.
-- `dynamic_templater.templatesDir`: Permite definir um diretório customizado para o gerenciamento dos templates (Padrão: C:\Users\your_user\.vscode\extensions\naceja.dynamic_templater-x.x.x\out\templates).
+- `dynamicTemplater.author.name`: Define o nome do autor, este valor estará disponível em `options.author.name` parâmetro da função render do Template.
+- `dynamicTemplater.author.email`: Define o email do autor, este valor estará disponível em `options.author.email` parâmetro da função render do Template.
+- `dynamicTemplater.customOptions`: Define um objeto de opções adicionais customizadas que serão enviadas ao render do template e estarão acessíveis em `options.customOptions`.
+- `dynamicTemplater.templatesDir`: Permite definir um diretório customizado para o gerenciamento dos templates (Padrão: C:\Users\your_user\.vscode\extensions\naceja.dynamictemplater-x.x.x\out\templates).
+
+## Comandos disponíveis
+
+- **Dynamic Templater:**`newFile`: Cria um novo arquivo baseado em template (Disponível apenas no menu de contexto do EXPLORER).
+- **Dynamic Templater:**`newTemplate`: Cria um novo arquivo de template.
+- **Dynamic Templater:**`openTemplatesDirectory`: Abre a atual pasta de templates no explorador de arquivos.
 
 ## Arquivo de Template
 

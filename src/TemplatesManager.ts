@@ -1,4 +1,3 @@
-import * as vscode from "vscode";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -52,10 +51,10 @@ export default class TemplatesManager {
             directoryPath: createFileDirectoryPath,
           },
           author: {
-            name: Configuration.get("author.name"),
-            email: Configuration.get("author.email"),
+            name: Configuration.read("author.name", ""),
+            email: Configuration.read("author.email", ""),
           },
-          customOptions: Configuration.get("customOptions", {}),
+          customOptions: Configuration.read<Object>("customOptions", {}),
         };
 
         const templateContent = this.renderTemplateContent(
@@ -179,11 +178,11 @@ export default class TemplatesManager {
    * Mount a template directory full path.
    * @example .../templates
    */
-  public templatesDirPath(): string {
-    let customTemplatesDir = vscode.workspace
-      .getConfiguration()
-      .get("templatesDir", null);
-    return customTemplatesDir ?? path.join(__dirname, "templates");
+  private templatesDirPath(): string {
+    return Configuration.read(
+      "templatesDir",
+      path.join(__dirname, "templates")
+    );
   }
 
   /**

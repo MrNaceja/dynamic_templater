@@ -1,9 +1,41 @@
-# Change Log
+# Changelog
 
-All notable changes to the "templater" extension will be documented in this file.
+[ENG - Content in english](#in-english)
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+[POR - Conteúdo em português](#em-português)
 
-## [Unreleased]
+## In English
 
-- Initial release
+### Added
+
+- Added a new command `dynamictemplater.openTemplatesDirectory`, this command open current templates directory path defined.
+
+### Fixed
+
+- Configurations usables.
+
+### Changed
+
+- -
+
+### Removed
+
+- -
+
+## Em Português
+
+### Adicionado
+
+- Novo comando adicionado `dynamictemplater.openTemplatesDirectory`, este comando permite abrir o diretório de templates atualmente configurado.
+
+### Corrigido
+
+- Utilização das configurações.
+
+### Alterado
+
+- -
+
+### Removido
+
+- -

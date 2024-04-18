@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
    * - Create a file template inside the templates folder default (or custom if defined).
    */
   const newTemplateCommand = vscode.commands.registerCommand(
-    "dynamic_templater.newTemplate",
+    "dynamictemplater.newTemplate",
     engine.newTemplate.bind(engine)
   );
 
@@ -25,7 +25,7 @@ export function activate(context: vscode.ExtensionContext) {
    * This command is visible only on context menu explorer...
    */
   const newFileBasedOnTemplateCommand = vscode.commands.registerCommand(
-    "dynamic_templater.newFile",
+    "dynamictemplater.newFile",
     engine.newFileBasedOnTemplate.bind(engine)
   );
 
@@ -33,9 +33,13 @@ export function activate(context: vscode.ExtensionContext) {
    * Open a current templates folder.
    */
   const openTemplatesDirectoryCommand = vscode.commands.registerCommand(
-    "dynamic_templater.openTemplatesDirectory",
+    "dynamictemplater.openTemplatesDirectory",
     engine.openTemplatesDirectory.bind(engine)
   );
 
-  context.subscriptions.push(newTemplateCommand, newFileBasedOnTemplateCommand);
+  context.subscriptions.push(
+    newTemplateCommand,
+    newFileBasedOnTemplateCommand,
+    openTemplatesDirectoryCommand
+  );
 }
