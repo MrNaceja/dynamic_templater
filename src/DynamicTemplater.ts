@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import TemplatesManager from "./TemplatesManager";
 import { TTemplate } from "./types";
+import { ContextManager } from "./ContextManager";
 
 export default class DynamicTemplater {
   #templatesManager = new TemplatesManager();
@@ -26,6 +27,7 @@ export default class DynamicTemplater {
         vscode.window.showInformationMessage(
           `Template ${templateName} created with sucessful. 🥳`
         );
+        ContextManager.log("Template created with sucessful.", "info");
       }
     } catch (e) {
       let _error = "A unhandled problem has ocurred. Sorry.";
@@ -33,6 +35,7 @@ export default class DynamicTemplater {
         _error = e.message;
       }
       vscode.window.showInformationMessage(_error);
+      ContextManager.log(_error, "error");
     }
   }
 
@@ -80,6 +83,7 @@ export default class DynamicTemplater {
         vscode.window.showInformationMessage(
           `New File ${newFileName} created with sucessful. 🥳`
         );
+        ContextManager.log("New file created.", "info");
       }
     } catch (e) {
       let _error = "A unhandled problem has ocurred. Sorry.";
@@ -87,6 +91,7 @@ export default class DynamicTemplater {
         _error = e.message;
       }
       vscode.window.showErrorMessage(_error);
+      ContextManager.log(_error, "error");
     }
   }
 
@@ -96,12 +101,17 @@ export default class DynamicTemplater {
   openTemplatesDirectory() {
     try {
       this.#templatesManager.openTemplatesDirectoryInFileExplorer();
+      ContextManager.log(
+        "Template current folder directory is opened.",
+        "info"
+      );
     } catch (e) {
       let _error = "An Error as ocurred when try open templates directory.";
       if (e instanceof Error) {
         _error = e.message;
       }
       vscode.window.showErrorMessage(_error);
+      ContextManager.log(_error, "error");
     }
   }
 

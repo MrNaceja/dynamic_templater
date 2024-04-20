@@ -5,6 +5,7 @@ import { TTemplate, TTemplateModuleRender, TTemplateOptions } from "./types";
 import Configuration from "./Configuration";
 import { ContextManager } from "./ContextManager";
 import { exec } from "node:child_process";
+import { Context } from "mocha";
 
 const TEMPLATE_EXTENSION = ".js";
 
@@ -64,8 +65,10 @@ export default class TemplatesManager {
         fs.writeFileSync(newFileNameWithPath, templateContent);
         return newFileNameWithPath;
       }
+      ContextManager.log("The directory to create a file not exists.", "warn");
       throw new Error("The directory to create a file not exists.");
     }
+    ContextManager.log("Inexistent template.", "warn");
     throw new Error("Inexistent template.");
   }
 
@@ -82,6 +85,10 @@ export default class TemplatesManager {
       try {
         content = templateRender(options);
       } catch (e) {
+        ContextManager.log(
+          "Your template has sintax errors: " + e!.toString(),
+          "warn"
+        );
         throw new SyntaxError(
           "Your template has sintax errors: " + e!.toString()
         );
@@ -91,8 +98,10 @@ export default class TemplatesManager {
       if (e instanceof SyntaxError) {
         _error = e.message;
       }
+      ContextManager.log(_error, "error");
       throw new Error(_error);
     }
+    ContextManager.log(`Template Content: \n${content}`, "info");
     return content;
   }
 
@@ -104,6 +113,10 @@ export default class TemplatesManager {
       ? fs.readFileSync(this.templateFilePath("default"), "utf8")
       : ContextManager.useState("defaultTemplate");
     if (!templateDefault.length) {
+      ContextManager.log(
+        "Sorry, Cannot retrieve a template renderer default.",
+        "warn"
+      );
       throw new Error("Sorry, Cannot retrieve a template renderer default.");
     }
     return templateDefault;
@@ -115,6 +128,10 @@ export default class TemplatesManager {
    */
   public createFileTemplate(templateName: string, content: string): string {
     if (this.existsTemplate(templateName)) {
+      ContextManager.log(
+        "The template name already exists, please choose other name.",
+        "warn"
+      );
       throw new Error(
         "The template name already exists, please choose other name."
       );
@@ -129,6 +146,7 @@ export default class TemplatesManager {
    */
   public openTemplatesDirectoryInFileExplorer() {
     if (!this.existsTemplatesDir()) {
+      ContextManager.log("Templates directory not found.", "warn");
       throw new Error("Templates directory not found.");
     }
     const platformsCommands = {
@@ -138,6 +156,10 @@ export default class TemplatesManager {
     };
     const platform = os.platform() as keyof typeof platformsCommands;
     if (!Object.keys(platformsCommands).includes(platform)) {
+      ContextManager.log(
+        "Cannot open Templates Directory. (Unknown Platform)",
+        "warn"
+      );
       throw new Error("Cannot open Templates Directory. (Unknown Platform)");
     }
     const command = platformsCommands[platform] as string;
@@ -145,6 +167,10 @@ export default class TemplatesManager {
     try {
       exec(`${command} ${templatesDirectory}`);
     } catch (e) {
+      ContextManager.log(
+        "Cannot open Templates Directory. (Internal Error)",
+        "error"
+      );
       throw new Error("Cannot open Templates Directory. (Internal Error)");
     }
   }
@@ -193,7 +219,15 @@ export default class TemplatesManager {
       if (!this.existsTemplatesDir()) {
         fs.mkdirSync(this.templatesDirPath());
       }
+      ContextManager.log(
+        `Templates Directory created on path: ${this.templatesDirPath()}.`,
+        "info"
+      );
     } catch (e) {
+      ContextManager.log(
+        "A error ocurred when trying create a templates directory.",
+        "error"
+      );
       throw new Error(
         "A error ocurred when trying create a templates directory."
       );
@@ -207,6 +241,12 @@ export default class TemplatesManager {
     return new Promise((resolve, reject) => {
       fs.readdir(this.templatesDirPath(), (error, filesTemplate) => {
         if (error) {
+          ContextManager.log(
+            error
+              ? error.message + error.cause
+              : "An error ocurred on read templates.",
+            "error"
+          );
           return reject(error);
         }
         const templates: Map<string, TTemplate> = new Map();
@@ -224,7 +264,6 @@ export default class TemplatesManager {
             });
           }
         });
-
         resolve(templates);
       });
     });

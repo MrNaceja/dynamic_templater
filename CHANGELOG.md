@@ -8,11 +8,11 @@
 
 ### Added
 
-- Added a new command `dynamictemplater.openTemplatesDirectory`, this command open current templates directory path defined.
+- Added Output channel to display info messages.
 
 ### Fixed
 
-- Configurations usables.
+- -
 
 ### Changed
 
@@ -26,11 +26,11 @@
 
 ### Adicionado
 
-- Novo comando adicionado `dynamictemplater.openTemplatesDirectory`, este comando permite abrir o diretório de templates atualmente configurado.
+- Adicionado canal de saída para apresentar mensagens informativas.
 
 ### Corrigido
 
-- Utilização das configurações.
+- -
 
 ### Alterado
 
