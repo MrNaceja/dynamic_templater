@@ -5,7 +5,6 @@ import { TTemplate, TTemplateModuleRender, TTemplateOptions } from "./types";
 import Configuration from "./Configuration";
 import { ContextManager } from "./ContextManager";
 import { exec } from "node:child_process";
-import { Context } from "mocha";
 
 const TEMPLATE_EXTENSION = ".js";
 
