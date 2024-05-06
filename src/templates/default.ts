@@ -1,11 +1,11 @@
 import { TTemplateOptions } from "../types";
 /**
- * @typedef  {Object                    } TTemplateOptions
- * @property {TTemplateOptionCreatedFile} createdFile
- * @property {TOptionAuthor             } author
- * @property {Object                    } customOptions
+ * @typedef  {Object             } TTemplateOptions
+ * @property {TOptionCreatedFile } createdFile
+ * @property {TOptionAuthor      } author
+ * @property {Object             } customOptions
  *
- * @typedef  {Object} TTemplateOptionCreatedFile
+ * @typedef  {Object} TOptionCreatedFile
  * @property {string} fileName
  * @property {string} extension
  * @property {string} directoryFolderName

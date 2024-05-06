@@ -7,12 +7,12 @@ export type TTemplate = {
 export type TTemplateModuleRender = (options: TTemplateOptions) => string;
 
 export type TTemplateOptions = {
-  createdFile: TTemplateOptionCreatedFile;
+  createdFile: TOptionCreatedFile;
   author: TOptionAuthor;
   customOptions: any;
 };
 
-export type TTemplateOptionCreatedFile = {
+export type TOptionCreatedFile = {
   fileName: string;
   extension: string;
   directoryFolderName: string;
